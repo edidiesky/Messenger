@@ -13,9 +13,9 @@ export const TopStyles = styled.div`
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(12px);
   z-index: 30;
-  padding: 1rem 0;
+  padding: 1.3rem 0;
 
-  padding-top: 1rem;
+  padding-top: 1.6rem;
 
   .icon {
     background-color: var(--grey-2);
@@ -44,12 +44,16 @@ export const TopStyles = styled.div`
   }
   }
 
+  .top_search{
+    margin:2rem auto;
+  }
+
 
 
    
   .top_icon{
      @media (max-width: 980px) {
-display:none;
+/* display:none; */
       }
   }
   .icon svg {
@@ -72,11 +76,11 @@ display:none;
   h4 {
     font-weight: 700;
     @media (max-width: 920px) {
-      display: none;
+    
     }
   }
   form {
-    height: 4rem;
+    min-height: 5rem;
     background-color: var(--grey-2);
     border-radius: 40px;
     position: sticky;
@@ -87,9 +91,10 @@ display:none;
     left: 0;
     @media (max-width: 920px) {
       gap: 0.6rem;
-      height: 4.5rem;
+      min-height: 5rem;
     /* padding: 0 1rem; */
     width: 70%;
+    maegin:1.5rem auto;
     justify-items: center;
 
     }
@@ -101,9 +106,10 @@ display:none;
     }
     .input {
       font-size: 15px;
+      height:100%;
       /* font-family: inherit; */
       @media (max-width: 980px) {
-       display:none;
+       /* display:none; */
       }
     }
   }
@@ -118,6 +124,7 @@ export const FriendListStyles = styled(motion.div)`
   color: var(--dark-1);
   height: 80%;
   overflow: auto;
+  margin-top:1.4rem;
    @media (max-width: 780px) {
   height: 90%;
 
@@ -144,7 +151,7 @@ export const FriendListStyles = styled(motion.div)`
     }
     h5 {
       @media (max-width: 780px) {
-        display: none;
+      
       }
     }
   }
@@ -161,7 +168,20 @@ export const FriendListStyles = styled(motion.div)`
     height: 40px !important;
   }
   .span {
-    font-size: 13px;
+    font-size: 12.5px;
+        overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  /* max-width: 250px; */
+  @media (max-width:580px) {
+    max-width: 290px;
+  }
+  @media (max-width:500px) {
+    max-width: 200px;
+  }
+   @media (max-width:380px) {
+    max-width: 150px;
+  }
   }
 
   h5 {

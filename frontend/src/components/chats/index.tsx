@@ -31,7 +31,7 @@ const userdata = [
     },
 ]
 
-const Home: React.FC = () => {
+const Chat: React.FC = () => {
     const [registermodal, setRegisterModal] = useState<boolean>(false)
     const [search, setSearch] = useState<boolean>(false)
     const [searchvalue, setSearchValue] = useState<string>('')
@@ -60,51 +60,55 @@ const Home: React.FC = () => {
                 search={search}
             />
             {
-                <FriendListStyles
-                    as={motion.div}
-                    initial={{ opacity: 0, visibility: "hidden" }}
-                    exit={{ opacity: 0, visibility: "hidden" }}
-                    animate={!search ? { opacity: 1, visibility: "visible" } : { opacity: 0, visibility: "hidden",height:"0px" }}
-                >
-                    {
-                        userprofileisLoading ? <LoaderIndex type="small" /> :
-                            <div className="chatlistWrapper w-100 flex column">
-                                {
-                                    users?.map((x?: any) => {
-                                        return <FriendList {...x} />
-                                    })
-                                }
-                            </div>
-                    }
+               <div className="w-90 auto">
+                    <FriendListStyles
+                        as={motion.div}
+                        initial={{ opacity: 0, visibility: "hidden" }}
+                        exit={{ opacity: 0, visibility: "hidden" }}
+                        animate={!search ? { opacity: 1, visibility: "visible" } : { opacity: 0, visibility: "hidden", height: "0px" }}
+                    >
+                        {
+                            userprofileisLoading ? <LoaderIndex type="small" /> :
+                                <div className="chatlistWrapper w-100 flex column">
+                                    {
+                                        users?.map((x?: any) => {
+                                            return <FriendList {...x} />
+                                        })
+                                    }
+                                </div>
+                        }
 
-                </FriendListStyles>
+                    </FriendListStyles>
+               </div>
             }
 
             {
-                <FriendListStyles
-                    as={motion.div}
-                    initial={{ opacity: 0, visibility: "hidden" }}
-                    exit={{ opacity: 0, visibility: "hidden", display: "none" }}
-                    animate={searchvalue ? { opacity: 1, visibility: "visible" } : { opacity: 0, visibility: "hidden", display:"none" }}
-                >                   
-                    <div className="w-90 auto flex column gap-1">
-                        <div className="search_tab w-100 flex item-center gap-2">
-                            <div className="">
-                                <BsSearch fontSize={'25px'} color={'var(--dark-1)'}/>
+              <div className="w-90 auto">
+                    <FriendListStyles
+                        as={motion.div}
+                        initial={{ opacity: 0, visibility: "hidden" }}
+                        exit={{ opacity: 0, visibility: "hidden", display: "none" }}
+                        animate={searchvalue ? { opacity: 1, visibility: "visible" } : { opacity: 0, visibility: "hidden", display: "none" }}
+                    >
+                        <div className="w-90 auto flex column gap-1">
+                            <div className="search_tab w-100 flex item-center gap-2">
+                                <div className="">
+                                    <BsSearch fontSize={'25px'} color={'var(--dark-1)'} />
+                                </div>
+                                <h4 className="fs-16 text-light text-dark">Search Messages for {searchvalue}</h4>
                             </div>
-                            <h4 className="fs-16 text-light text-dark">Search Messages for {searchvalue}</h4>
+
+                            <div className="w-90 auto flex column">
+                                {
+                                    userSearchResult?.map((x?: any) => {
+                                        return <ActiveList {...x} />
+                                    })
+                                }
+                            </div>
                         </div>
 
-                       <div className="w-90 auto flex column">
-                            {
-                                userSearchResult?.map((x?: any) => {
-                                    return <ActiveList {...x} />
-                                })
-                            }
-                       </div>
-                    </div>
-
-                </FriendListStyles>
+                    </FriendListStyles>
+              </div>
             }
 
         </HomeStyles>
@@ -113,4 +117,4 @@ const Home: React.FC = () => {
 
 
 
-export default Home
+export default Chat

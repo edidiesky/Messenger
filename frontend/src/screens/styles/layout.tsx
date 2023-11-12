@@ -11,6 +11,8 @@ export const MainLayoutStyles = styled.div`
      display: none;
  @media (max-width:580px) {
     display: flex;
+    overflow: auto;
+     height: 100vh;
  }
   }
 `
@@ -53,7 +55,6 @@ export const LayoutStyles = styled.div`
         border-right: 1px solid rgba(0,0,0,.1);
         height: 100%;
          @media (max-width:580px){
-            display: none;
          }
         }
         .left_small_sidebar{

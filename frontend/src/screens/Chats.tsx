@@ -2,20 +2,21 @@
 
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Home from '../components/home';
+import Chat from '../components/chats';
 const Chats: React.FC = () => {
     return (
-        <HomeStyles>
-            <Home />
-        </HomeStyles>
+        <ChatStyles className='chat_container'>
+            <Chat />
+        </ChatStyles>
     )
 }
 
 
-const HomeStyles = styled.div`
+const ChatStyles = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+
 `
 
 export default Chats

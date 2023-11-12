@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BsArrowLeft } from "react-icons/bs";
+import {HiOutlineBars3} from 'react-icons/hi2'
 import { IoSearch } from 'react-icons/io5'
 import { TopStyles } from "./styles";
 import VideoIcon from "../../assets/svg/video";
@@ -25,7 +26,10 @@ const Top: React.FC<SearchType> = ({ setSearch, search, setSearchValue, searchva
     return (
         <TopStyles>
             <div className="w-90 auto flex column gap-1">
-                <div className="flex item-center justify-space w-90 auto">
+                <div className="flex top_search item-center justify-space w-90 auto">
+                    <div className="icon top_icon flex item-center justify-center">
+                        <HiOutlineBars3 fontSize={'25px'} />
+                    </div>
                     <h4 className="fs-24 text-dark text-extra-bold">Chats</h4>
                     <div className="icon top_icon flex item-center justify-center">
                         <VideoIcon />
@@ -37,7 +41,9 @@ const Top: React.FC<SearchType> = ({ setSearch, search, setSearchValue, searchva
                             <BsArrowLeft color="var(--dark-1)" fontSize={'20px'} />
                         </div>
                         <form action="" className="flex-1 family1 auto flex item-center gap-1">
-                            <IoSearch color="var(--dark-1)" fontSize={'20px'} />
+                            <div className="icons flex item-center justify-center">
+                                <IoSearch color="var(--dark-1)" fontSize={'20px'} />
+                            </div>
                             <input
                                 onChange={(e) => onChange(e)}
                                 type="text"
@@ -49,7 +55,8 @@ const Top: React.FC<SearchType> = ({ setSearch, search, setSearchValue, searchva
                                 className="input fs-14 flex-1 text-dark text-light"
                             />
                             {
-                                searchvalue && <div onClick={() => setSearchValue('')} className="icon icons_1 flex item-center justify-center">
+                                searchvalue && <div style={{marginLeft:"-10px"}} onClick={() => setSearchValue('')}
+                                 className="icon icons_1 flex item-center justify-center">
                                     <RxCross1 color="var(--dark-1)" />
                                 </div>
                             }
@@ -64,7 +71,7 @@ const Top: React.FC<SearchType> = ({ setSearch, search, setSearchValue, searchva
                                 onClick={() => setSearch(true)}
                                 type="text"
                                 placeholder="Search Messenger"
-                                className="input fs-14 w-100 text-dark text-light"
+                                className="input fs-14 flex-1 text-dark text-light"
                             />
                         </form>
                     </div>

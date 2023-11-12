@@ -16,7 +16,6 @@ import PeopleIndex from "./screens/People";
 import MarketPlaceIndex from "./screens/marketplace";
 import RequestsIndex from "./screens/Requests";
 import LandingPage from "./screens/Landing";
-import { GetUserCookie } from "./features/auth/authReducer";
 import ProtectRoute from "./utils/ProtectRoute";
 export default function App() {
   const [height, setHeight] = useState(0);

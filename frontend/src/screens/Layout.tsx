@@ -40,7 +40,8 @@ const LayoutIndex: React.FC = () => {
                     }
                 </div>
                 <div className="small_container_layout">
-                    
+                    <Outlet />
+
                 </div>
             </MainLayoutStyles>
         
