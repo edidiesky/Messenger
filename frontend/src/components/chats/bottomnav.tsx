@@ -13,7 +13,7 @@ const BottomNav: React.FC = () => {
                         smallSidebatlist.map((x?: any) => {
                             return <NavLink
                             // style={{gap:"7px"}}
-                                className="sidebar_icons flex item-center justify-space column text-grey"
+                                className="sidebar_icons flex item-center justify-center column text-grey"
                                 activeClassName="active"
                                 to={`/chat${x.path}/t/${userInfo?.id}`}
                                 key={x.id}
