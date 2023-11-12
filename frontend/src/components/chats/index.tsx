@@ -10,6 +10,7 @@ import { GetAllUserProfile, GetAllUserSearch } from "../../features/auth/authRed
 import LoaderIndex from "../loaders";
 import { motion } from "framer-motion";
 import ActiveList from "./activelist";
+import BottomNav from "./bottomnav";
 
 const userdata = [
     // 5. Center Devils
@@ -53,6 +54,7 @@ const Chat: React.FC = () => {
     }, [searchvalue])
     return (
         <HomeStyles className="h-100">
+            <BottomNav />
             <Top
                 setSearchValue={setSearchValue}
                 searchvalue={searchvalue}
@@ -61,6 +63,7 @@ const Chat: React.FC = () => {
             />
             {
                <div className="w-90 auto">
+                 
                     <FriendListStyles
                         as={motion.div}
                         initial={{ opacity: 0, visibility: "hidden" }}
@@ -110,6 +113,8 @@ const Chat: React.FC = () => {
                     </FriendListStyles>
               </div>
             }
+
+
 
         </HomeStyles>
     )
