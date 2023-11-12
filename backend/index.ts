@@ -1,4 +1,4 @@
-import express from "express";
+import express, {Express} from "express";
 import path from "path";
 
 import cors from "cors";
@@ -13,9 +13,9 @@ import { createServer } from 'node:http'
 import { Server } from "socket.io";
 
 
-const app = express();
+const app: Express = express();
 const server = createServer(app);
-const io = new Server({
+const io = new Server(server,{
   cors: {
     origin: "http://localhost:3000"
   }
@@ -60,6 +60,6 @@ io.on('connection', (socket) => {
   });
 });
 
-app.listen(4000, () => {
+server.listen(4000, () => {
   console.log("server is listening on port 4000");
 });

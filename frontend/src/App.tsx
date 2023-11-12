@@ -1,6 +1,6 @@
 import React, { useState, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import { io } from 'socket.io-client';
+import io from 'socket.io-client';
 const socketIo = io as any
 
 import "./index.css";
@@ -28,7 +28,7 @@ export default function App() {
   // React.useEffect(() => {
   //   dispatch(GetUserCookie({data:"any"}))
   // }, [])
-  socketIo('http://localhost:4000');
+  const sockets = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
 
   React.useEffect(() => {
     dispatch(getBackgroundTheme('any'))
