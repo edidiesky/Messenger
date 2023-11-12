@@ -5,14 +5,15 @@ position:fixed;
 width:100%;
 bottom:0;
 left:0;
+    /* height: 60px; */
+
   background: rgba(255, 255, 255, 0.65);
   backdrop-filter: blur(12px);
   z-index: 30;
-  padding: 1.3rem 0;
-  padding-top: 1.6rem;
   .sidebar_icons{
-    min-height: 45px;
-    width: 70%;
+    /* height: 30px; */
+    flex:1;
+    height: 100%;
     border-radius: 8px;
     transition: all .4s;
    &:hover {
