@@ -144,6 +144,19 @@ const LandingStyles = styled.div`
   min-height: 100vh;
   position: relative;
   padding: 3rem 0;
+ul {
+  @media (max-width:580px) {
+     gap:2rem;
+
+      }
+}
+     .fs-14 {
+      @media (max-width:580px) {
+      font-size: 12px !important;
+      line-height: 1.1;
+
+      }
+    }
   .hero_intro{
     display: grid;
     justify-content: space-between;
@@ -179,12 +192,24 @@ const LandingStyles = styled.div`
         }
       }
     }
+ 
     h1 {
       font-size: 85px;
       line-height: 1.2;
       -webkit-background-clip: text;
       color: transparent;
       word-break: break-word;
+
+      @media (max-width:780px) {
+      font-size: 65px;
+
+      }
+
+        @media (max-width:580px) {
+      font-size: 50px;
+      line-height: 1.1;
+
+      }
     }
     grid-template-columns: .6fr .7fr;
     @media (max-width:1080px) {

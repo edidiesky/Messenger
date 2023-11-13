@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import io from 'socket.io-client';
 let socketIo = io as any
 import { ChatSectionStyles } from './styles';
@@ -17,8 +17,7 @@ const Feed: React.FC = () => {
     const { id } = useParams()
   
     const [socket, setSocket] = React.useState('')
-    const socketRef = useRef(socketIo.connect(import.meta.env.VITE_API_BASE_URL))
-  
+    socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
 
     // console.log(id)
     const dispatch = useAppDispatch()
@@ -48,7 +47,10 @@ const Feed: React.FC = () => {
 
     // emit the user id to the server
     useEffect(() => {
-        socketRef?.current?.emit('addUserId', userInfo?.id)
+        socketIo?.emit('addUserId', userInfo?.id)
+        socketIo?.on('getAllConnectedUser', (users?:any)=> {
+            console.log(users)
+        })
     }, [userInfo])
 
 

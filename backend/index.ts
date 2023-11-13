@@ -1,4 +1,4 @@
-import express, {Express} from "express";
+import express, { Express } from "express";
 import path from "path";
 
 import cors from "cors";
@@ -15,7 +15,7 @@ import { Server } from "socket.io";
 
 const app: Express = express();
 const server = createServer(app);
-const io = new Server(server,{
+const io = new Server(server, {
   cors: {
     origin: "http://localhost:3000"
   }
@@ -55,23 +55,43 @@ app.use(errorHandler);
 
 // function that check sif the userId is included in the users array else it add the user id and scoket Id
 
-const users = [] as any
-const addUserId = (userId?:string, socketId?:string)=> {
+let users = [] as any
+const addUserId = (userId?: any, socketId?: any) => {
   // check if the object: {yserId, socketId} is being found in the usres array
   // if not found add it to the users array
-  !users?.some((user?:any)=> user?.userId === userId) && users.push({userId, socketId})
+  !users?.some((user?: any) => user?.userId === userId) && users.push({ userId, socketId })
+}
+
+const RemoveUser = (socketId?: string) => {
+  // check if the object: {yserId, socketId} is being found in the usres array
+  // if not found add it to the users array
+  users = users?.filter((user?: any) => user?.socketId !== socketId)
 }
 
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
+    RemoveUser(socket?.id)
+    io.emit('getAllConnectedUser', users)
+
   });
 
   // io.emit('message','Connected form the backend')
-  socket.on('addUserId', (id) => addUserId(id, socket?.id))
+  // socket.on('addUserId', (id) => console.log(id))
+
+  // get the userId connected from the client and send the users back to the client
+  socket.on('addUserId', (id) => {
+    addUserId(id, socket?.id)
+    io.emit('getAllConnectedUser', users)
+  })
+
+
+
 });
 
+
+// addUserId(id, socket?.id)
 server.listen(4000, () => {
   console.log("server is listening on port 4000");
 });
