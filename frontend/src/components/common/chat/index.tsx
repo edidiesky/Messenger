@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { io } from 'socket.io-client';
-
+import React, { useEffect, useRef } from 'react';
+import io from 'socket.io-client';
+let socketIo = io as any
 import { ChatSectionStyles } from './styles';
 import Topbar from './topbar';
 import Content from './Content';
@@ -15,18 +15,22 @@ import { clearconversation } from '../../../features/conversation/conversationSl
 
 const Feed: React.FC = () => {
     const { id } = useParams()
+  
     const [socket, setSocket] = React.useState('')
-    // useEffect(() => {
-    //     setSocket(io("ws://localhost:4000"))
-    // }, [])
+    const socketRef = useRef(socketIo.connect(import.meta.env.VITE_API_BASE_URL))
+  
+
     // console.log(id)
     const dispatch = useAppDispatch()
     // 
     const { conversationDetails } = useAppSelector(store => store.conversation)
+    const { userInfo } = useAppSelector(store => store.auth)
     useEffect(() => {
         dispatch(clearmessage("any"))
         dispatch(clearconversation("any"))
     }, [])
+
+
     useEffect(() => {
         dispatch(Createconversation({ conversationData: { userId: id } }))
         dispatch(GetSingleUserProfile({ id }))
@@ -41,6 +45,11 @@ const Feed: React.FC = () => {
             dispatch(clearmessage("any"))
         }
     }, [conversationDetails])
+
+    // emit the user id to the server
+    useEffect(() => {
+        socketRef?.current?.emit('addUserId', userInfo?.id)
+    }, [userInfo])
 
 
     return (

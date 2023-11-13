@@ -53,11 +53,23 @@ app.use('/api/v1/message', userMessage)
 app.use(NotFound);
 app.use(errorHandler);
 
+// function that check sif the userId is included in the users array else it add the user id and scoket Id
+
+const users = [] as any
+const addUserId = (userId?:string, socketId?:string)=> {
+  // check if the object: {yserId, socketId} is being found in the usres array
+  // if not found add it to the users array
+  !users?.some((user?:any)=> user?.userId === userId) && users.push({userId, socketId})
+}
+
 io.on('connection', (socket) => {
-  console.log(`⚡: ${socket.id} user just connected!`);
+  console.log('a user connected');
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
   });
+
+  // io.emit('message','Connected form the backend')
+  socket.on('addUserId', (id) => addUserId(id, socket?.id))
 });
 
 server.listen(4000, () => {
