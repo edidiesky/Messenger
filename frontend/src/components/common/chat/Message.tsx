@@ -1,4 +1,6 @@
 import React from 'react';
+import io from 'socket.io-client';
+let socketIo = io as any
 import { MdAddReaction, MdOutlineAddCircle } from "react-icons/md";
 import { AiFillPicture } from "react-icons/ai";
 import { HiThumbUp } from "react-icons/hi";
@@ -11,12 +13,19 @@ import { useAppDispatch, useAppSelector } from '../../../hooks/reduxtoolkit';
 import { Createmessage } from '../../../features/message/messageReducer';
 
 const Message: React.FC = () => {
+    socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
     const [body, setBody] = React.useState<string>('')
     const dispatch = useAppDispatch()
     const { conversationDetails } = useAppSelector(store => store.conversation)
-    const { userInfo } = useAppSelector(store => store.auth)
+    const { userInfo, userDetails } = useAppSelector(store => store.auth)
     const handleCreateMessage = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        socketIo?.emit('sendMessage', {
+            text: body,
+            senderId: userInfo?.id,
+            receiverId: userDetails?.id,
+        })
+
         dispatch(Createmessage({
             body: body,
             userId: userInfo?._id,
