@@ -68,8 +68,10 @@ const RemoveUser = (socketId?: string) => {
   users = users?.filter((user?: any) => user?.socketId !== socketId)
 }
 
-const getASpecificUser = (userId?: string) => {
-  return users?.filter((user?: any) => user?.userId !== userId)
+const getASpecificUser = (userId?: any) => {
+  // console.log(userId)
+
+  return users
 }
 
 io.on('connection', (socket) => {
@@ -94,10 +96,11 @@ io.on('connection', (socket) => {
   socket.on('sendMessage',({receiverId, senderId, text})=> {
     // get the specific usre u intend to send the message to
     const user = getASpecificUser(receiverId)
-    io.to(user?.id).emit('getMessage', {
-      text:text,
-      senderId:senderId
-    })
+    console.log(user)
+    // io.to(user[0]?.socketId).emit('getMessage', {
+    //   text:text,
+    //   senderId:senderId
+    // })
 
   })
 
