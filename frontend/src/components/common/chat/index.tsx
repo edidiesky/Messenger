@@ -17,7 +17,6 @@ const Feed: React.FC = () => {
     const { id } = useParams()
   
     const [socket, setSocket] = React.useState('')
-    socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
 
     // console.log(id)
     const dispatch = useAppDispatch()
@@ -44,14 +43,6 @@ const Feed: React.FC = () => {
             dispatch(clearmessage("any"))
         }
     }, [conversationDetails])
-
-    // emit the user id to the server
-    useEffect(() => {
-        socketIo?.emit('addUserId', userInfo?.id)
-        socketIo?.on('getAllConnectedUser', (users?:any)=> {
-            console.log(users)
-        })
-    }, [userInfo])
 
 
     return (

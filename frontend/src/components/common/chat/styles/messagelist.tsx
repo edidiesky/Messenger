@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const MessageListStyles = styled.div`
   height: 100%;
-  .chatList{
+  .chatList {
     padding-top: 4rem;
     padding-right: 2rem;
   }
@@ -13,22 +13,24 @@ export const MessageListStyles = styled.div`
     position: relative;
   }
   .recieverChat {
-    background-color: var(--light-grey);  
-   border-radius: 30px;
+    background-color: var(--light-grey);
+    border-radius: 30px;
   }
   .SenderChat {
-   border-radius: 24px;
-   border-bottom-right-radius: 4px;
-   background-color: var(--primary);
-   color: #fff;
+    border-radius: 24px;
+    border-bottom-right-radius: 4px;
+    background-color: var(--primary);
+    color: #fff;
   }
   .SenderChat,
   .recieverChat {
     padding: 1rem 1.5rem;
     width: fit-content;
+    max-width: 300px;
     @media (max-width: 980px) {
       background-color: #fff;
       padding: 2rem 4rem;
+      max-width: 280px;
     }
   }
   .chatCard {
@@ -36,4 +38,4 @@ export const MessageListStyles = styled.div`
     display: flex;
     align-items: flex-start;
   }
-`
+`;

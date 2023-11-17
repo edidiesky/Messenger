@@ -71,17 +71,12 @@ const RemoveUser = (socketId?: string) => {
 const getASpecificUser = (userId?: any) => {
   // console.log(userId)
 
-  return users
+  return users.filter((user?:any)=> user?.userId === userId)
 }
 
 io.on('connection', (socket) => {
   console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected');
-    RemoveUser(socket?.id)
-    io.emit('getAllConnectedUser', users)
-
-  });
+ 
 
   // io.emit('message','Connected form the backend')
   // socket.on('addUserId', (id) => console.log(id))
@@ -96,14 +91,20 @@ io.on('connection', (socket) => {
   socket.on('sendMessage',({receiverId, senderId, text})=> {
     // get the specific usre u intend to send the message to
     const user = getASpecificUser(receiverId)
-    console.log(user)
-    // io.to(user[0]?.socketId).emit('getMessage', {
-    //   text:text,
-    //   senderId:senderId
-    // })
+    console.log(user[0]?.socketId)
+    io.to(user[0]?.socketId).emit('getMessage', {
+      text:text,
+      senderId:senderId
+    })
 
   })
 
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+    RemoveUser(socket?.id)
+    io.emit('getAllConnectedUser', users)
+
+  });
 });
 
 

@@ -1,7 +1,7 @@
 import React, { useState, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import io from 'socket.io-client';
-const socketIo = io as any
+let socketIo = io as any
 
 import "./index.css";
 import {
@@ -20,28 +20,18 @@ import ProtectRoute from "./utils/ProtectRoute";
 export default function App() {
   const [height, setHeight] = useState(0);
   const [socket, setSocket] = React.useState<any>(null)
+    const { userInfo } = useAppSelector((store) => store.auth);
 
   const dispatch = useAppDispatch()
-  const { backgroundtheme, colortheme } = useAppSelector(store => store.theme)
-  // set the theme
+ 
+      socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
 
-  // React.useEffect(() => {
-  //   dispatch(GetUserCookie({data:"any"}))
-  // }, [])
-  const sockets = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
-
-  React.useEffect(() => {
-    dispatch(getBackgroundTheme('any'))
-    dispatch(getColorTheme('any'))
-  }, [])
-
-  // store the theme background and color in the local storage of the user broweser
-  React.useEffect(() => {
-    document.documentElement.className = `${backgroundtheme} ${colortheme}`
-    // store
-    localStorage.setItem('theme', backgroundtheme);
-    localStorage.setItem('colortheme', colortheme);
-  }, [backgroundtheme, colortheme])
+   React.useEffect(() => {
+        socketIo?.emit('addUserId', userInfo?.id)
+        socketIo?.on('getAllConnectedUser', (users?:any)=> {
+            // console.log(users)
+        })
+    }, [])
 
 
   return (
