@@ -75,7 +75,7 @@ const getASpecificUser = (userId?: any) => {
 }
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  // console.log('a user connected');
  
 
   // io.emit('message','Connected form the backend')
@@ -91,11 +91,13 @@ io.on('connection', (socket) => {
   socket.on('sendMessage',({receiverId, senderId, text})=> {
     // get the specific usre u intend to send the message to
     const user = getASpecificUser(receiverId)
-    console.log(user[0]?.socketId)
-    io.to(user[0]?.socketId).emit('getMessage', {
+    // console.log(user[0]?.socketId, user)
+    io.emit('getMessage', {
       text:text,
       senderId:senderId
     })
+
+    console.log(users)
 
   })
 

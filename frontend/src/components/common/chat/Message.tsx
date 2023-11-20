@@ -8,11 +8,15 @@ import ImageIcon from "../../../assets/svg/Image";
 import GifIcon from "../../../assets/svg/gif";
 import StickerIcon from "../../../assets/svg/sticker";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxtoolkit";
-import { Createmessage } from "../../../features/message/messageReducer";
+import {
+  Createmessage,
+} from "../../../features/message/messageReducer";
+import { ReceiveMessage } from "../../../features/message/messageSlice";
 
 const Message: React.FC = () => {
   socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
   const [body, setBody] = React.useState<string>("");
+  const [arrivalmessage, setArrivalMessage] = React.useState<string>("");
   // const dispatch = useAppDispatch()
 
   const dispatch = useAppDispatch();
@@ -21,17 +25,21 @@ const Message: React.FC = () => {
   const { userInfo, userDetails } = useAppSelector((store) => store.auth);
 
   React.useEffect(() => {
-    //    console.log("message");
 
     socketIo?.on("getMessage", (message?: any) => {
       console.log(message);
-      // dispatch(Createmessage({
+      // dispatch(
+      //   ReceiveMessage({
       //     body: message?.text,
       //     userId: message?.senderId,
-      //     conversationId: conversationDetails?.id
-      // }))
+      //     conversationId: conversationDetails?.id,
+      //   })
+      // );
+      
     });
+    //  console.log(arrivalmessage);
   }, []);
+ 
   const handleCreateMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     socketIo?.emit("sendMessage", {
@@ -47,6 +55,9 @@ const Message: React.FC = () => {
     // }))
     setBody("");
   };
+
+  
+  
 
   return (
     <MessageStyles className="w-100 flex column gap-2">
