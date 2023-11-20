@@ -11,7 +11,7 @@ const FriendList: React.FC<{ id: number, image?: string, name?: string }> = ({
     return (
 
         <NavLink
-            activeClassName="active"
+            // activeClassName="active"
             to={`/chat/t/${id}`}
             onClick={() => setTab(id)}
             className={"w-90 auto listCard flex item-center justify-space"

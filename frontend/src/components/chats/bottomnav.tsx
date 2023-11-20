@@ -14,7 +14,7 @@ const BottomNav: React.FC = () => {
                             return <NavLink
                             // style={{gap:"7px"}}
                                 className="sidebar_icons flex item-center justify-center column text-grey"
-                                activeClassName="active"
+                                // activeClassName="active"
                                 to={`/chat${x.path}/t/${userInfo?.id}`}
                                 key={x.id}
                             >

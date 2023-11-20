@@ -14,7 +14,7 @@ const SmallSidebar: React.FC = () => {
                         sidebatlist.map((x?: any) => {
                             return <NavLink
                                 className="sidebar_icons flex item-center justify-center text-grey"
-                                activeClassName="active"
+                                // activeClassName="active"
                                 to={`/chat${x.path}/t/${userInfo?.id}`}
                                 key={x.id}
                             >
