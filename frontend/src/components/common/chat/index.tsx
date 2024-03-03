@@ -34,7 +34,7 @@ const Feed: React.FC = () => {
         dispatch(Createconversation({ conversationData: { userId: id } }))
         dispatch(GetSingleUserProfile({ id }))
         dispatch(GetUsersMessageConversation({ receiverId: id }))
-    }, [id])
+    }, [id, setMessage])
 
     const handleSingleMessageDetails = async () => {
         try {
@@ -62,7 +62,7 @@ const Feed: React.FC = () => {
         } else {
             dispatch(clearmessage("any"))
         }
-    }, [conversationDetails])
+    }, [conversationDetails, setMessage])
 
 
     return (

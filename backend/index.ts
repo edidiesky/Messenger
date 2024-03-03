@@ -71,7 +71,7 @@ const RemoveUser = (socketId?: string) => {
 const getASpecificUser = (userId?: any) => {
   // console.log(userId)
 
-  return users.filter((user?: any) => user?.userId === userId)
+  return users?.filter((obj?: any) => obj.userId === userId)
 }
 
 io.on('connection', (socket) => {
@@ -86,21 +86,24 @@ io.on('connection', (socket) => {
   // socket.on('addUserId', (id) => console.log(id))
 
   // // get the userId connected from the client and send the users back to the client
- 
+
 
   // // send message to a speco=ific user
-  // socket.on('sendMessage',({receiverId, senderId, text})=> {
-  //   // get the specific usre u intend to send the message to
-  //   const user = getASpecificUser(receiverId)
-  //   // console.log(user[0]?.socketId, user)
-  //   io.emit('getMessage', {
-  //     text:text,
-  //     senderId:senderId
-  //   })
+  socket.on('sendMessage', ({ receiverId, senderId, text }) => {
+    // get the specific usre u intend to send the message to
+    const user = getASpecificUser(receiverId)
+    // console.log(user, users)
+    // console.log(user[0]?.userId)
+    io.to(user[0]?.socketId).emit('getMessage', {
+      text: text,
+      senderId: senderId
+    })
+    // console.log(user[0].socketId)
+    getASpecificUser(receiverId)
+    
+    // console.log(receiverId, senderId, text)
 
-  //   console.log(users)
-
-  // })
+  })
 
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');

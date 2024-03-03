@@ -23,17 +23,6 @@ export default function App() {
     const { userInfo } = useAppSelector((store) => store.auth);
 
   const dispatch = useAppDispatch()
- 
-      socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
-
-   React.useEffect(() => {
-        socketIo?.emit('addUserId', userInfo?.id)
-        socketIo?.on('getAllConnectedUser', (users?:any)=> {
-            console.log(users)
-        })
-    }, [])
-
-
   return (
     <div className="based" style={{ height }}>
       <Routes>

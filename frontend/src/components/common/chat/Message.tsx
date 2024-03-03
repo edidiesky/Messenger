@@ -31,24 +31,7 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
   const { conversationDetails } = useAppSelector((store) => store.conversation);
   const { userInfo, userDetails, token } = useAppSelector((store) => store.auth);
   // console.log(socketIo)
-  // React.useEffect(() => {
 
-  //   // socketIo?.on("getMessage", (message?: any) => {
-  //   //   console.log(message);
-  //   //   // dispatch(
-  //   //   //   ReceiveMessage({
-  //   //   //     body: message?.text,
-  //   //   //     userId: message?.senderId,
-  //   //   //     conversationId: conversationDetails?.id,
-  //   //   //   })
-  //   //   // );
-
-  //   // });
-  //   socketIo.on('message', (message)=> {
-  //     console.log(message)
-  //   })
-  //   //  console.log(arrivalmessage);
-  // }, [socketIo]);
 
   const handleCreateMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -58,21 +41,25 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
       text: body,
     });
 
-    try {
-      const config = {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      };
-      const response = await axios.get(
-        `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
-        config
-      )
-      return setMessage(response.data.messages)
+    // try {
+    //   const config = {
+    //     headers: {
+    //       authorization: `Bearer ${token}`,
+    //     },
+    //   };
+    //   const response = await axios.post(
+    //     `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
+    //     {
+    //       body,
+    //       userId: userInfo?._id,
+    //     },
+    //     config
+    //   )
+    //   return setMessage(response.data.messages)
 
-    } catch (err: any) {
-      console.log(err)
-    }
+    // } catch (err: any) {
+    //   console.log(err)
+    // }
 
     // dispatch(Createmessage({
     //     body: body,
@@ -81,10 +68,16 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
     // }))
     setBody("");
   };
-
-
-
-
+  React.useEffect(() => {
+    socketIo?.emit('addUserId', userInfo?.id)
+    socketIo?.on('getAllConnectedUser', (users?: any) => {
+      console.log(users)
+    })
+    socketIo.on('getMessage', (message: any) => {
+      console.log(message)
+    })
+    //  console.log(arrivalmessage);
+  }, [socketIo]);
   return (
     <MessageStyles className="w-100 flex column gap-2">
       <form
