@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const ContentStyles = styled.div`
-  height: 90%;
+  height: 100%;
   padding: 4rem 0;
   overflow: auto;
   .content_top {

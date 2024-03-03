@@ -23,22 +23,25 @@ const Message: React.FC = () => {
 
   const { conversationDetails } = useAppSelector((store) => store.conversation);
   const { userInfo, userDetails } = useAppSelector((store) => store.auth);
+  // console.log(socketIo)
+  // React.useEffect(() => {
 
-  React.useEffect(() => {
-
-    socketIo?.on("getMessage", (message?: any) => {
-      console.log(message);
-      // dispatch(
-      //   ReceiveMessage({
-      //     body: message?.text,
-      //     userId: message?.senderId,
-      //     conversationId: conversationDetails?.id,
-      //   })
-      // );
+  //   // socketIo?.on("getMessage", (message?: any) => {
+  //   //   console.log(message);
+  //   //   // dispatch(
+  //   //   //   ReceiveMessage({
+  //   //   //     body: message?.text,
+  //   //   //     userId: message?.senderId,
+  //   //   //     conversationId: conversationDetails?.id,
+  //   //   //   })
+  //   //   // );
       
-    });
-    //  console.log(arrivalmessage);
-  }, []);
+  //   // });
+  //   socketIo.on('message', (message)=> {
+  //     console.log(message)
+  //   })
+  //   //  console.log(arrivalmessage);
+  // }, [socketIo]);
  
   const handleCreateMessage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

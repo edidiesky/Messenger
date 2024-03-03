@@ -71,35 +71,36 @@ const RemoveUser = (socketId?: string) => {
 const getASpecificUser = (userId?: any) => {
   // console.log(userId)
 
-  return users.filter((user?:any)=> user?.userId === userId)
+  return users.filter((user?: any) => user?.userId === userId)
 }
 
 io.on('connection', (socket) => {
-  // console.log('a user connected');
- 
+  console.log('a user connected');
 
-  // io.emit('message','Connected form the backend')
-  // socket.on('addUserId', (id) => console.log(id))
 
-  // get the userId connected from the client and send the users back to the client
+  // io.emit('message','Connected form the backend and testing sending of the data form the socket server')
   socket.on('addUserId', (id) => {
     addUserId(id, socket?.id)
     io.emit('getAllConnectedUser', users)
   })
+  // socket.on('addUserId', (id) => console.log(id))
 
-  // send message to a speco=ific user
-  socket.on('sendMessage',({receiverId, senderId, text})=> {
-    // get the specific usre u intend to send the message to
-    const user = getASpecificUser(receiverId)
-    // console.log(user[0]?.socketId, user)
-    io.emit('getMessage', {
-      text:text,
-      senderId:senderId
-    })
+  // // get the userId connected from the client and send the users back to the client
+ 
 
-    console.log(users)
+  // // send message to a speco=ific user
+  // socket.on('sendMessage',({receiverId, senderId, text})=> {
+  //   // get the specific usre u intend to send the message to
+  //   const user = getASpecificUser(receiverId)
+  //   // console.log(user[0]?.socketId, user)
+  //   io.emit('getMessage', {
+  //     text:text,
+  //     senderId:senderId
+  //   })
 
-  })
+  //   console.log(users)
+
+  // })
 
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
@@ -107,6 +108,7 @@ io.on('connection', (socket) => {
     io.emit('getAllConnectedUser', users)
 
   });
+
 });
 
 
