@@ -1,5 +1,6 @@
 import React from "react";
 import io from "socket.io-client";
+import axios from "axios";
 let socketIo = io as any;
 import { MdOutlineAddCircle } from "react-icons/md";
 import { HiThumbUp } from "react-icons/hi";
@@ -12,9 +13,15 @@ import {
   Createmessage,
 } from "../../../features/message/messageReducer";
 import { ReceiveMessage } from "../../../features/message/messageSlice";
+type MessageProps = {
+  setMessage: (value: any) => void,
+  message?: any
+}
 
-const Message: React.FC = () => {
+const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
   socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
+  const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
+
   const [body, setBody] = React.useState<string>("");
   const [arrivalmessage, setArrivalMessage] = React.useState<string>("");
   // const dispatch = useAppDispatch()
@@ -22,7 +29,7 @@ const Message: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { conversationDetails } = useAppSelector((store) => store.conversation);
-  const { userInfo, userDetails } = useAppSelector((store) => store.auth);
+  const { userInfo, userDetails, token } = useAppSelector((store) => store.auth);
   // console.log(socketIo)
   // React.useEffect(() => {
 
@@ -35,21 +42,37 @@ const Message: React.FC = () => {
   //   //   //     conversationId: conversationDetails?.id,
   //   //   //   })
   //   //   // );
-      
+
   //   // });
   //   socketIo.on('message', (message)=> {
   //     console.log(message)
   //   })
   //   //  console.log(arrivalmessage);
   // }, [socketIo]);
- 
-  const handleCreateMessage = (e: React.FormEvent<HTMLFormElement>) => {
+
+  const handleCreateMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     socketIo?.emit("sendMessage", {
       receiverId: userDetails?.id,
       senderId: userInfo?.id,
       text: body,
     });
+
+    try {
+      const config = {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
+        config
+      )
+      return setMessage(response.data.messages)
+
+    } catch (err: any) {
+      console.log(err)
+    }
 
     // dispatch(Createmessage({
     //     body: body,
@@ -59,8 +82,8 @@ const Message: React.FC = () => {
     setBody("");
   };
 
-  
-  
+
+
 
   return (
     <MessageStyles className="w-100 flex column gap-2">

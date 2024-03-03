@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import io from 'socket.io-client';
+import axios from "axios";
 let socketIo = io as any
 import { ChatSectionStyles } from './styles';
 import Topbar from './topbar';
@@ -15,14 +16,14 @@ import { clearconversation } from '../../../features/conversation/conversationSl
 
 const Feed: React.FC = () => {
     const { id } = useParams()
-  
-    const [socket, setSocket] = React.useState('')
+    const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
+    const [message, setMessage] = React.useState([])
 
     // console.log(id)
     const dispatch = useAppDispatch()
     // 
     const { conversationDetails } = useAppSelector(store => store.conversation)
-    const { userInfo } = useAppSelector(store => store.auth)
+    const { userInfo, token } = useAppSelector(store => store.auth)
     useEffect(() => {
         dispatch(clearmessage("any"))
         dispatch(clearconversation("any"))
@@ -35,10 +36,29 @@ const Feed: React.FC = () => {
         dispatch(GetUsersMessageConversation({ receiverId: id }))
     }, [id])
 
+    const handleSingleMessageDetails = async () => {
+        try {
+            const config = {
+                headers: {
+                    authorization: `Bearer ${token}`,
+                },
+            };
+            const response = await axios.get(
+                `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
+                config
+            )
+            return setMessage(response.data.messages)
+
+        } catch (err: any) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         if (conversationDetails !== null) {
 
-            dispatch(GetSinglemessageDetails({ conversationId: conversationDetails?.id }))
+            // dispatch(GetSinglemessageDetails({ conversationId: conversationDetails?.id }))
+            handleSingleMessageDetails()
         } else {
             dispatch(clearmessage("any"))
         }
@@ -49,8 +69,8 @@ const Feed: React.FC = () => {
         <ChatSectionStyles className="w-100 h-100">
             <div className="main_chat w-100 h-100">
                 <Topbar />
-                <Content />
-                <Message />
+                <Content setMessage={setMessage} message={message} />
+                <Message setMessage={setMessage} message={message} />
             </div>
             {/* <div className="receiver_profile"></div> */}
         </ChatSectionStyles>

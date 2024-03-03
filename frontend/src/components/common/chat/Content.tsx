@@ -2,8 +2,11 @@ import React from 'react';
 import { ContentStyles } from './styles/content';
 import { useAppSelector } from '../../../hooks/reduxtoolkit';
 import MessageList from './MessageList';
-
-const Content: React.FC = () => {
+type ContentProps = {
+    setMessage: (value: any) => void,
+    message?: any
+}
+const Content: React.FC<ContentProps> = ({ setMessage, message }) => {
     const { userDetails } = useAppSelector(store => store.auth)
 
     return (
@@ -24,7 +27,7 @@ const Content: React.FC = () => {
                     </h4>
                 </div>
             </div>
-            <MessageList/>
+            <MessageList setMessage={setMessage} message={message} />
         </ContentStyles>
     )
 }
