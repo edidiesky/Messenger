@@ -96,12 +96,8 @@ io.on('connection', (socket) => {
     // console.log(user[0]?.userId)
     io.to(user[0]?.socketId).emit('getMessage', {
       text: text,
-      senderId: senderId
+      senderId: senderId,
     })
-    // console.log(user[0].socketId)
-    getASpecificUser(receiverId)
-    
-    // console.log(receiverId, senderId, text)
 
   })
 

@@ -18,6 +18,7 @@ const Feed: React.FC = () => {
     const { id } = useParams()
     const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
     const [message, setMessage] = React.useState<any>([])
+    const [arrivalmessage, setArrivalMessage] = React.useState<string>("");
 
     // console.log(id)
     const dispatch = useAppDispatch()
@@ -34,7 +35,7 @@ const Feed: React.FC = () => {
         dispatch(Createconversation({ conversationData: { userId: id } }))
         dispatch(GetSingleUserProfile({ id }))
         dispatch(GetUsersMessageConversation({ receiverId: id }))
-    }, [id, setMessage])
+    }, [id])
 
     const handleSingleMessageDetails = async () => {
         try {
@@ -73,7 +74,7 @@ const Feed: React.FC = () => {
             <div className="main_chat w-100 h-100">
                 <Topbar />
                 <Content setMessage={setMessage} message={message} />
-                <Message setMessage={setMessage} message={message} />
+                <Message setMessage={setMessage} message={message} setArrivalMessage={setArrivalMessage} />
             </div>
             {/* <div className="receiver_profile"></div> */}
         </ChatSectionStyles>

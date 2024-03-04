@@ -4,7 +4,8 @@ import { useAppSelector } from '../../../hooks/reduxtoolkit';
 import MessageList from './MessageList';
 type ContentProps = {
     setMessage: (value: any) => void,
-    message?: any
+    message?: any,
+    
 }
 const Content: React.FC<ContentProps> = ({ setMessage, message }) => {
     const { userDetails } = useAppSelector(store => store.auth)

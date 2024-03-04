@@ -15,16 +15,17 @@ import {
 import { ReceiveMessage } from "../../../features/message/messageSlice";
 type MessageProps = {
   setMessage: (value: any) => void,
+  setArrivalMessage: (value: any) => void,
   message?: any
 }
 
-const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
+const Message: React.FC<MessageProps> = ({ setMessage, message, setArrivalMessage }) => {
   socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
   const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
 
   const [body, setBody] = React.useState<string>("");
   const [image, setImage] = React.useState<string>("");
-  const [arrivalmessage, setArrivalMessage] = React.useState<string>("");
+  
   // const dispatch = useAppDispatch()
 
   const dispatch = useAppDispatch();
@@ -56,12 +57,14 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
         },
         config
       )
-      setBody("");
-      return setMessage([...message, response.data.messages])
+
+      return setMessage((prev?: any) => [...prev, response?.data?.messages])
 
     } catch (err: any) {
       console.log(err)
     }
+
+    setBody("");
 
 
     // dispatch(Createmessage({
@@ -69,7 +72,7 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
     //     userId: userInfo?._id,
     //     conversationId: conversationDetails?.id
     // }))
-    
+
   };
   React.useEffect(() => {
     socketIo?.emit('addUserId', userInfo?.id)
@@ -79,14 +82,14 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
     socketIo.on('getMessage', ({ text, senderId }: any) => {
       console.log(message)
 
-      setMessage([...message, {
+      setArrivalMessage((prev?: any) => [...prev, {
         body: text,
         image: image,
         senderId: senderId
       }])
     })
     //  console.log(arrivalmessage);
-  }, [socketIo, setMessage, message]);
+  }, [socketIo, setArrivalMessage]);
   console.log(message)
   return (
     <MessageStyles className="w-100 flex column gap-2">

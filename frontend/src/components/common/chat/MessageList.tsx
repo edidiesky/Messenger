@@ -4,9 +4,11 @@ import { useAppSelector } from "../../../hooks/reduxtoolkit";
 import moment from "moment";
 type MessageListProps = {
   setMessage: (value: any) => void,
+  setArrivalMessage: (value: any) => void,
+
   message?: any
 }
-const MessageList: React.FC<MessageListProps> = ({ setMessage, message }) => {
+const MessageList: React.FC<MessageListProps> = ({ setMessage, message, setArrivalMessage }) => {
   const { userInfo, userDetails } = useAppSelector((store) => store.auth);
   // const { message } = useAppSelector((store) => store.message);
   return (
