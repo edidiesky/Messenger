@@ -64,6 +64,8 @@ const Feed: React.FC = () => {
         }
     }, [conversationDetails, setMessage])
 
+    // console.log(message)
+
 
     return (
         <ChatSectionStyles className="w-100 h-100">

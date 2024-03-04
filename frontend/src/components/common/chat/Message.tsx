@@ -72,7 +72,7 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
   React.useEffect(() => {
     socketIo?.emit('addUserId', userInfo?.id)
     socketIo?.on('getAllConnectedUser', (users?: any) => {
-      console.log(users)
+      // console.log(users)
     })
     socketIo.on('getMessage', ({ text, senderId }: any) => {
       console.log(message)
