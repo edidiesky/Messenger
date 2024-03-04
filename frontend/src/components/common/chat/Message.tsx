@@ -15,17 +15,16 @@ import {
 import { ReceiveMessage } from "../../../features/message/messageSlice";
 type MessageProps = {
   setMessage: (value: any) => void,
-  setArrivalMessage: (value: any) => void,
   message?: any
 }
 
-const Message: React.FC<MessageProps> = ({ setMessage, message, setArrivalMessage }) => {
+const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
   socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
   const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
 
   const [body, setBody] = React.useState<string>("");
   const [image, setImage] = React.useState<string>("");
-  
+  const [arrivalmessage, setArrivalMessage] = React.useState<string>("");
   // const dispatch = useAppDispatch()
 
   const dispatch = useAppDispatch();
@@ -58,7 +57,8 @@ const Message: React.FC<MessageProps> = ({ setMessage, message, setArrivalMessag
         config
       )
 
-      return setMessage((prev?: any) => [...prev, response?.data?.messages])
+      setMessage((prev?: any) => [...prev, response.data.messages])
+      setBody("");
 
     } catch (err: any) {
       console.log(err)
@@ -82,14 +82,14 @@ const Message: React.FC<MessageProps> = ({ setMessage, message, setArrivalMessag
     socketIo.on('getMessage', ({ text, senderId }: any) => {
       console.log(message)
 
-      setArrivalMessage((prev?: any) => [...prev, {
+      setMessage((prev?: any) => [...prev, {
         body: text,
         image: image,
         senderId: senderId
       }])
     })
     //  console.log(arrivalmessage);
-  }, [socketIo, setArrivalMessage]);
+  }, [socketIo, setMessage, message]);
   console.log(message)
   return (
     <MessageStyles className="w-100 flex column gap-2">
