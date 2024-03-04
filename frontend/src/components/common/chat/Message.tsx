@@ -56,18 +56,20 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
         },
         config
       )
+      setBody("");
       return setMessage([...message, response.data.messages])
 
     } catch (err: any) {
       console.log(err)
     }
 
+
     // dispatch(Createmessage({
     //     body: body,
     //     userId: userInfo?._id,
     //     conversationId: conversationDetails?.id
     // }))
-    setBody("");
+    
   };
   React.useEffect(() => {
     socketIo?.emit('addUserId', userInfo?.id)
@@ -85,6 +87,7 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
     })
     //  console.log(arrivalmessage);
   }, [socketIo, setMessage, message]);
+  console.log(message)
   return (
     <MessageStyles className="w-100 flex column gap-2">
       <form

@@ -59,10 +59,11 @@ const Feed: React.FC = () => {
 
             // dispatch(GetSinglemessageDetails({ conversationId: conversationDetails?.id }))
             handleSingleMessageDetails()
+            // dispatch(GetUsersMessageConversation({ receiverId: id }))
         } else {
             dispatch(clearmessage("any"))
         }
-    }, [conversationDetails, setMessage])
+    }, [conversationDetails])
 
     // console.log(message)
 
