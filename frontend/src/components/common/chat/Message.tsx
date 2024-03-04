@@ -23,6 +23,7 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
   const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
 
   const [body, setBody] = React.useState<string>("");
+  const [image, setImage] = React.useState<string>("");
   const [arrivalmessage, setArrivalMessage] = React.useState<string>("");
   // const dispatch = useAppDispatch()
 
@@ -41,25 +42,25 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
       text: body,
     });
 
-    // try {
-    //   const config = {
-    //     headers: {
-    //       authorization: `Bearer ${token}`,
-    //     },
-    //   };
-    //   const response = await axios.post(
-    //     `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
-    //     {
-    //       body,
-    //       userId: userInfo?._id,
-    //     },
-    //     config
-    //   )
-    //   return setMessage(response.data.messages)
+    try {
+      const config = {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      };
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
+        {
+          body,
+          userId: userInfo?._id,
+        },
+        config
+      )
+      return setMessage([...message, response.data.messages])
 
-    // } catch (err: any) {
-    //   console.log(err)
-    // }
+    } catch (err: any) {
+      console.log(err)
+    }
 
     // dispatch(Createmessage({
     //     body: body,
@@ -73,11 +74,17 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
     socketIo?.on('getAllConnectedUser', (users?: any) => {
       console.log(users)
     })
-    socketIo.on('getMessage', (message: any) => {
+    socketIo.on('getMessage', ({ text, senderId }: any) => {
       console.log(message)
+
+      setMessage([...message, {
+        body: text,
+        image: image,
+        senderId: senderId
+      }])
     })
     //  console.log(arrivalmessage);
-  }, [socketIo]);
+  }, [socketIo, setMessage, message]);
   return (
     <MessageStyles className="w-100 flex column gap-2">
       <form

@@ -17,7 +17,7 @@ import { clearconversation } from '../../../features/conversation/conversationSl
 const Feed: React.FC = () => {
     const { id } = useParams()
     const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
-    const [message, setMessage] = React.useState([])
+    const [message, setMessage] = React.useState<any>([])
 
     // console.log(id)
     const dispatch = useAppDispatch()

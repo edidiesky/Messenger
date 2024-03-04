@@ -14,11 +14,11 @@ const MessageList: React.FC<MessageListProps> = ({ setMessage, message }) => {
       <div className="chatList w-90 auto flex column gap-2">
         {message?.map(
           (messages?: {
-            sender: any;
+            senderId: any;
             createdAt: moment.MomentInput;
             body: any;
           }) => {
-            const usermessage = messages?.sender.id === userInfo?.id;
+            const usermessage = messages?.senderId === userInfo?.id;
             const createdAt = moment(messages?.createdAt).format(
               "MMMM Do YYYY, h:mm a"
             );
@@ -48,11 +48,11 @@ const MessageList: React.FC<MessageListProps> = ({ setMessage, message }) => {
                     >
                       <div className="flex wrap column">
                         <div className="w-100 flex item-center gap-1">
-                          <img
+                          {/* <img
                             src={messages?.sender?.image}
                             alt=""
                             className="avatar"
-                          />
+                          /> */}
                           <div className=" recieverChat">
                             <h4 className="fs-14 text-dark text-light">
                               {messages?.body}
