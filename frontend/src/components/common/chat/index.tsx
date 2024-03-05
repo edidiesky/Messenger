@@ -25,8 +25,9 @@ const Feed: React.FC = () => {
     const { conversationDetails } = useAppSelector(store => store.conversation)
     const { userInfo, token } = useAppSelector(store => store.auth)
     useEffect(() => {
-        dispatch(clearmessage("any"))
+        setMessage([])
         dispatch(clearconversation("any"))
+        // dispatch(Createconversation({ conversationData: { userId: id } }))
     }, [])
 
 
@@ -34,7 +35,7 @@ const Feed: React.FC = () => {
         dispatch(Createconversation({ conversationData: { userId: id } }))
         dispatch(GetSingleUserProfile({ id }))
         dispatch(GetUsersMessageConversation({ receiverId: id }))
-    }, [id, setMessage])
+    }, [id])
 
     const handleSingleMessageDetails = async () => {
         try {
@@ -47,7 +48,8 @@ const Feed: React.FC = () => {
                 `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
                 config
             )
-            return setMessage(response.data.messages)
+            // setMessage((prev: any) => [...prev, response.data.messages])
+            setMessage(response.data.messages)
 
         } catch (err: any) {
             console.log(err)
@@ -56,16 +58,15 @@ const Feed: React.FC = () => {
 
     useEffect(() => {
         if (conversationDetails !== null) {
-
-            // dispatch(GetSinglemessageDetails({ conversationId: conversationDetails?.id }))
             handleSingleMessageDetails()
-            dispatch(GetUsersMessageConversation({ receiverId: id }))
         } else {
-            dispatch(clearmessage("any"))
+            setMessage([])
         }
     }, [conversationDetails, setMessage])
 
     // console.log(message)
+
+    // console.log(conversationDetails)
 
 
     return (

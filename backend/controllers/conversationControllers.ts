@@ -50,10 +50,10 @@ const createConversation = asyncHandler(async (req: CustomInterface, res: Respon
     }
     // check for exisitng convo
     const existingConversation = await prisma.conversations.findMany({
-      where:{
-        OR:[
+      where: {
+        OR: [
           {
-            userIds:{
+            userIds: {
               equals: [userId, currentUserId]
             }
           },
@@ -65,7 +65,7 @@ const createConversation = asyncHandler(async (req: CustomInterface, res: Respon
         ]
       }
     })
-   
+
     // send if it exists
     if (existingConversation[0]) {
       res.setHeader("Content-Type", "text/html");
@@ -105,7 +105,7 @@ const createConversation = asyncHandler(async (req: CustomInterface, res: Respon
     res.status(200).json({ conversation: newConversation })
 
   } catch (error: any) {
-    res.status(401).json({ message: error?.data})
+    res.status(401).json({ message: error?.data })
   }
 
 
@@ -145,7 +145,7 @@ const getUserConversation = asyncHandler(async (req: CustomInterface, res: Respo
     res.status(200).json({ conversation: null })
   }
 
-  
+
 });
 
 // GET All Gig

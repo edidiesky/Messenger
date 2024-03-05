@@ -9,7 +9,7 @@ import userdata from "./data/userdata";
 import { timelineData } from "./data/timelineData";
 import prisma from "./prisma";
 
-const mongoUrl = process.env.MONGO_URL;
+const mongoUrl = process.env.DATABASE_URL;
 if (!mongoUrl) {
   throw new Error('MongoDB connection string is not defined.');
 }

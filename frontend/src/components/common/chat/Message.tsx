@@ -80,17 +80,16 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
       // console.log(users)
     })
     socketIo.on('getMessage', ({ text, senderId }: any) => {
-      console.log(message)
-
-      setMessage((prev?: any) => [...prev, {
+     
+      setMessage((prev: any) => [...prev, {
         body: text,
         image: image,
         senderId: senderId
       }])
     })
     //  console.log(arrivalmessage);
-  }, [socketIo, setMessage, message]);
-  console.log(message)
+  }, [socketIo]);
+  // console.log(message)
   return (
     <MessageStyles className="w-100 flex column gap-2">
       <form
