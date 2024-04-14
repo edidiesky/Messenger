@@ -4,7 +4,8 @@ import { FaPhoneAlt, FaVideo } from "react-icons/fa";
 import { TopBarStyles } from './styles/topbar';
 import { useAppSelector } from '../../../hooks/reduxtoolkit';
 
-const Topbar: React.FC = () => {
+const Topbar = ({ setSidebar, sidebar }:
+    { setSidebar: (value?: any) => void, sidebar: boolean})  => {
     const { userDetails } = useAppSelector(store => store.auth)
     return (
         <TopBarStyles className="w-100">
@@ -19,7 +20,7 @@ const Topbar: React.FC = () => {
                         loading="lazy"
                         src={userDetails?.image} className=" avatar"
                     />
-                    <h5 style={{fontWeight:"500"}} className={"fs-15 flex column text-dark"}>
+                    <h5 style={{ fontWeight: "500" }} className={"fs-15 flex column text-dark"}>
                         {userDetails?.name}
                         <div className="span block fs-12 text-light text-grey">
                             {/* Active 27min ago */}
@@ -34,7 +35,7 @@ const Topbar: React.FC = () => {
                     <div className="icon flex item-center justify-center avatar">
                         <FaVideo className="fs-20" />
                     </div>
-                    <div className="icon flex item-center justify-center avatar">
+                    <div onClick={() => setSidebar(!sidebar)} className="icon flex item-center justify-center avatar">
                         <BiDotsVerticalRounded className="fs-20" />
                     </div>
                 </div>

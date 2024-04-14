@@ -101,7 +101,7 @@ html {
   width: 3rem;
   height: 3rem;
   border: 2.2px solid #fff !important;
-  border-top-color: #E6E7E9 !important;
+  border-top-color: #e6e7e9 !important;
 }
 @keyframes spinner {
   to {
@@ -384,7 +384,7 @@ p {
   p {
     width: 100%;
   }
- 
+
   .w-85 {
     width: 90%;
   }

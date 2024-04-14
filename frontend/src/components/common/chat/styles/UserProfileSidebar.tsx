@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const ContentStyles = styled.div`
-  height: 100%;
-  padding: 4rem 0;
-  overflow: auto;
-  .content_top {
-     img {
-       width: 6rem;
-    height: 6rem;
+export const UserProfileSidebarStyles = styled.div`
+  width:500px;
+  height:100%;
+border-left: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 3rem 1rem;
+    img {
+       width: 8rem;
+    height: 8rem;
     border-radius: 50%;
     object-fit: cover;
      }
@@ -18,5 +18,4 @@ export const ContentStyles = styled.div`
         /* margin-top: 10px; */
       }
      }
-  }
 `

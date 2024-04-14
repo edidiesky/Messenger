@@ -13,11 +13,13 @@ import { Createconversation, GetUsersMessageConversation } from '../../../featur
 import { GetSinglemessageDetails } from '../../../features/message/messageReducer';
 import { clearmessage } from '../../../features/message/messageSlice';
 import { clearconversation } from '../../../features/conversation/conversationSlice';
+import UserProfileSidebar from './UserProfileSidebar';
 
 const Feed: React.FC = () => {
     const { id } = useParams()
     const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
     const [message, setMessage] = React.useState<any>([])
+    const [sidebar, setSidebar] = React.useState<boolean>(false)
 
     // console.log(id)
     const dispatch = useAppDispatch()
@@ -27,7 +29,7 @@ const Feed: React.FC = () => {
     useEffect(() => {
         setMessage([])
         dispatch(clearconversation("any"))
-        // dispatch(Createconversation({ conversationData: { userId: id } }))
+        // dispatch(Createconversation({conversationData: {userId: id } }))
     }, [])
 
 
@@ -70,12 +72,16 @@ const Feed: React.FC = () => {
 
 
     return (
-        <ChatSectionStyles className="w-100 h-100">
+        <ChatSectionStyles className="w-100 h-100 flex">
             <div className="main_chat w-100 h-100">
-                <Topbar />
+                <Topbar
+                    setSidebar={setSidebar}
+                    sidebar={sidebar}
+                />
                 <Content setMessage={setMessage} message={message} />
                 <Message setMessage={setMessage} message={message} />
             </div>
+            <UserProfileSidebar/>
             {/* <div className="receiver_profile"></div> */}
         </ChatSectionStyles>
     )

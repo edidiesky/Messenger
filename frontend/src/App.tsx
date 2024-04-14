@@ -20,25 +20,25 @@ import ProtectRoute from "./utils/ProtectRoute";
 export default function App() {
   const [height, setHeight] = useState(0);
   const [socket, setSocket] = React.useState<any>(null)
-    const { userInfo } = useAppSelector((store) => store.auth);
+  const { userInfo } = useAppSelector((store) => store.auth);
 
   const dispatch = useAppDispatch()
- 
-      socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
 
-   React.useEffect(() => {
-        socketIo?.emit('addUserId', userInfo?.id)
-        socketIo?.on('getAllConnectedUser', (users?:any)=> {
-            // console.log(users)
-        })
-    }, [])
+  socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
+
+  React.useEffect(() => {
+    socketIo?.emit('addUserId', userInfo?.id)
+    socketIo?.on('getAllConnectedUser', (users?: any) => {
+      // console.log(users)
+    })
+  }, [])
 
 
   return (
     <div className="based" style={{ height }}>
       <Routes>
         <Route path={"/"} element={
-            <LandingPage />}></Route>
+          <LandingPage />}></Route>
         <Route path={"/login"} element={<Auth />}></Route>
         <Route path={"/chat"} element={<LayoutIndex />}>
           <Route path="t/:id" element={

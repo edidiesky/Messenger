@@ -28,7 +28,7 @@ const FriendList: React.FC<{ id: number, image?: string, name?: string }> = ({
                     style={{ gap: ".2rem" }}
                 >
                     <span className="text-bold">{name}</span>
-                    <div className="span block w-100 fs-10 text-light text-grey">
+                    <div style={{fontSize:"8px"}} className="span block w-100 text-light text-grey">
                         You are now connected on Messenger ...
                     </div>
                 </h5>

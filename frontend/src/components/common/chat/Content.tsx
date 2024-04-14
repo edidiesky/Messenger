@@ -22,13 +22,17 @@ const Content: React.FC<ContentProps> = ({ setMessage, message }) => {
                         loading="lazy"
                         src={userDetails?.image}
                     />
-                    <h4 className="fs-18 text-bold text-center">{userDetails?.name}
-                        <span className="w-100 text-center fs-14 text-light block text-dark">You are now connected on Messenger</span>
-
+                    <h4 className="fs-16 text-bold flex column item-center justify-center">
+                        {userDetails?.name}
+                        <span className="w-[70%] auto text-center fs-12 text-light block text-grey">You're friends on Facebook
+                            Lives in Port Harcourt
+                            Technical Support Engineer at Cyberspace network ltd, Internshala Student Partner at Internshala and Chief executive officer at Uniuyo FEVER</span>
                     </h4>
                 </div>
             </div>
-            <MessageList setMessage={setMessage} message={message} />
+            <MessageList setMessage={setMessage} message={message} setArrivalMessage={function (value: any): void {
+                throw new Error('Function not implemented.');
+            } } />
         </ContentStyles>
     )
 }
