@@ -1,8 +1,9 @@
 import styled from "styled-components";
-
-export const UserProfileSidebarStyles = styled.div`
+import { motion } from 'framer-motion'
+export const UserProfileSidebarStyles = styled(motion.div)`
   width:500px;
   height:100%;
+  position:relative;
 border-left: 1px solid rgba(0, 0, 0, 0.08);
   padding: 3rem 1rem;
     img {

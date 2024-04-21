@@ -14,6 +14,7 @@ import { GetSinglemessageDetails } from '../../../features/message/messageReduce
 import { clearmessage } from '../../../features/message/messageSlice';
 import { clearconversation } from '../../../features/conversation/conversationSlice';
 import UserProfileSidebar from './UserProfileSidebar';
+import MyAnimatePresence from '../../../utils/AnimatePresence';
 
 const Feed: React.FC = () => {
     const { id } = useParams()
@@ -81,7 +82,10 @@ const Feed: React.FC = () => {
                 <Content setMessage={setMessage} message={message} />
                 <Message setMessage={setMessage} message={message} />
             </div>
-            <UserProfileSidebar/>
+            <MyAnimatePresence>
+                {sidebar && <UserProfileSidebar sidebar={sidebar} />}
+            </MyAnimatePresence>
+
             {/* <div className="receiver_profile"></div> */}
         </ChatSectionStyles>
     )
