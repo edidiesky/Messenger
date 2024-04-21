@@ -18,4 +18,11 @@ border-left: 1px solid rgba(0, 0, 0, 0.08);
         /* margin-top: 10px; */
       }
      }
+  .list {
+    padding:.8rem 1rem;
+    border-radius: 10px;
+    &:hover {
+      background:#fafafa;
+    }
+  }
 `

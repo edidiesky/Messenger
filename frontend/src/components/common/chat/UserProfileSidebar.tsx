@@ -1,5 +1,5 @@
 import React from 'react';
-import { BiDotsVerticalRounded, BiPhone, BiSearch } from "react-icons/bi";
+import { BiChevronRight, BiDotsVerticalRounded, BiPhone, BiSearch } from "react-icons/bi";
 import { FaPhoneAlt, FaVideo, FaFacebook } from "react-icons/fa";
 import { FaBell } from "react-icons/fa6";
 import { UserProfileSidebarStyles } from './styles/UserProfileSidebar';
@@ -19,7 +19,7 @@ const UserProfileSidebar = () => {
                         loading="lazy"
                         src={userDetails?.image}
                     />
-                    <h4 className="fs-16 text-extra-bold flex column item-center justify-center">
+                    <h4 className="fs-18 text-bold flex column item-center justify-center">
                         {userDetails?.name}
                         <span className="w-[70%] auto text-center fs-12 text-light block text-grey">   Active 8h ago</span>
                     </h4>
@@ -47,6 +47,45 @@ const UserProfileSidebar = () => {
                         </div>
                         <span className=" text-center fs-12 text-light block text-grey">   Search
                         </span>
+                    </div>
+                </div>
+
+                <div className="flex column">
+                    <div className="list flex item-center justify-space w-100">
+                        <h4 className="fs-16 text-bold">
+                            Chat Info
+                        </h4>
+                        <span className="text-center
+                             fs-24 text-light block text-dark">
+                            <BiChevronRight /></span>
+                    </div>
+
+                    <div className="list flex item-center justify-space w-100">
+                        <h4 className="fs-16 text-bold">
+                         Customize Chat
+                        </h4>
+                        <span className="text-center
+                             fs-24 text-light block text-dark">
+                            <BiChevronRight /></span>
+                    </div>
+
+                    <div className="list flex item-center justify-space w-100">
+                        <h4 className="fs-16 text-bold">
+                          Media files and Links
+                        </h4>
+                        <span className="text-center
+                             fs-24 text-light block text-dark">
+                            <BiChevronRight /></span>
+                    </div>
+
+
+                    <div className="list flex item-center justify-space w-100">
+                        <h4 className="fs-16 text-bold">
+                           Privacy and Support
+                        </h4>
+                        <span className="text-center
+                             fs-24 text-light block text-dark">
+                            <BiChevronRight /></span>
                     </div>
                 </div>
             </div>
