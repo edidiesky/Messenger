@@ -10,11 +10,13 @@ const UserProfileSidebarVariants = {
         right: '-100%',
         width:"0",
         opacity:0,
+        padding:"0",
     },
     enter: {
         right: 0,
         width: "500px",
         opacity:1,
+        padding: "3rem 1rem",
         transition: {
             duration: .2,
             ease: [0.76, 0, 0.24, 1]
@@ -24,6 +26,7 @@ const UserProfileSidebarVariants = {
         right: '-100%',
         width:"0",
         opacity:0,
+        padding:"0",
         transition: {
             duration: .2,
             ease: [0.76, 0, 0.24, 1]

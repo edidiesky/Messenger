@@ -13,103 +13,161 @@ interface CustomInterface extends ExpressRequest {
 //  Public
 const createConversation = asyncHandler(async (req: CustomInterface, res: Response, next: NextFunction) => {
 
+  // try {
+  //   // get the body parameter
+  //   const currentUserId = req.user?.userId
+  //   const { members, isGroup, lastMessage, userId } = req.body
+  //   // check if a group convo is needed
+  //   if (isGroup) {
+  //     const groupConvoData = {
+  //       isGroup,
+  //       users: {
+  //         connect: [
+  //           {
+  //             ...members.map((member?: { value: string }) => {
+  //               return { id: member?.value }
+  //             })
+  //           },
+  //           {
+  //             id: currentUserId
+  //           }
+  //         ]
+  //       }
+  //     }
+
+  //     const groupConvoOutcome = await prisma.conversations.create({
+  //       include: {
+  //         users: true
+  //       },
+
+  //       data: groupConvoData
+  //     })
+
+  //     res.setHeader("Content-Type", "text/html");
+  //     res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
+  //     res.status(200).json({ conversation: groupConvoOutcome })
+  //   }
+  //   // check for exisitng convo
+  //   const existingConversation = await prisma.conversations.findMany({
+  //     where: {
+  //       OR: [
+  //         {
+  //           userIds: {
+  //             equals: [userId, currentUserId]
+  //           }
+  //         },
+  // {
+  //   userIds: {
+  //     equals: [currentUserId, userId]
+  //   }
+  // },
+  //       ]
+  //     }
+  //   })
+
+  //   // send if it exists
+  //   if (existingConversation[0]) {
+      // res.setHeader("Content-Type", "text/html");
+      // res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
+      // res.status(200).json({ conversation: existingConversation[0] })
+  //   }
+  //   // else create new one
+
+    // const conversationdata = {
+    //   lastMessage,
+    //   isGroup,
+    //   users: {
+    //     connect: [
+    //       // sender ids tc come first since he is the one sending it
+    //       {
+    //         id: currentUserId
+    //       },
+    //       {
+    //         id: userId
+    //       },
+
+    //     ]
+    //   },
+
+    // }
+
+    // const newConversation = await prisma.conversations.create({
+    //   data: conversationdata,
+    //   include: {
+    //     users: true,
+    //   }
+    // })
+  //   res.setHeader("Content-Type", "text/html");
+  //   res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
+  //   res.status(200).json({ conversation: newConversation })
+
+  // } catch (error: any) {
+  //   res.status(401).json({ message: error?.data })
+  // }
+  const { members, isGroup, lastMessage, userId } = req.body
+  const senderuserId = req.user?.userId
   try {
-    // get the body parameter
-    const currentUserId = req.user?.userId
-    const { members, isGroup, lastMessage, userId } = req.body
-    // check if a group convo is needed
-    if (isGroup) {
-      const groupConvoData = {
+    // find conversation
+    const existingConversations = await prisma.conversations.findMany({
+      where: {
+        OR: [{
+          userIds: {
+            equals: [senderuserId, userId]
+          }
+        },
+        {
+          userIds: {
+            equals: [userId, senderuserId]
+          }
+        },
+        ]
+      }
+    })
+    // console.log(existingConversations[0])
+    if (existingConversations[0] !== undefined) {
+      res.setHeader("Content-Type", "text/html");
+      res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
+
+      res.status(200).json({ conversation: existingConversations[0] })
+    } else {
+      const conversationdata = {
+        lastMessage,
         isGroup,
         users: {
           connect: [
+            // sender ids tc come first since he is the one sending it
             {
-              ...members.map((member?: { value: string }) => {
-                return { id: member?.value }
-              })
+              id: senderuserId
             },
             {
-              id: currentUserId
-            }
-          ]
-        }
-      }
+              id: userId
+            },
 
-      const groupConvoOutcome = await prisma.conversations.create({
-        include: {
-          users: true
+          ]
         },
 
-        data: groupConvoData
+      }
+
+      const newConversation = await prisma.conversations.create({
+        data: conversationdata,
+        include: {
+          users: true,
+        }
       })
 
       res.setHeader("Content-Type", "text/html");
       res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
 
-      res.status(200).json({ conversation: groupConvoOutcome })
+      res.status(200).json({ conversation: newConversation })
     }
-    // check for exisitng convo
-    const existingConversation = await prisma.conversations.findMany({
-      where: {
-        OR: [
-          {
-            userIds: {
-              equals: [userId, currentUserId]
-            }
-          },
-          {
-            userIds: {
-              equals: [currentUserId, userId]
-            }
-          },
-        ]
-      }
-    })
-
-    // send if it exists
-    if (existingConversation[0]) {
-      res.setHeader("Content-Type", "text/html");
-      res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-
-      res.status(200).json({ conversation: existingConversation[0] })
-    }
-    // else create new one
-
-    const conversationdata = {
-      lastMessage,
-      isGroup,
-      users: {
-        connect: [
-          // sender ids tc come first since he is the one sending it
-          {
-            id: currentUserId
-          },
-          {
-            id: userId
-          },
-
-        ]
-      },
-
-    }
-
-    const newConversation = await prisma.conversations.create({
-      data: conversationdata,
-      include: {
-        users: true,
-      }
-    })
-    res.setHeader("Content-Type", "text/html");
-    res.setHeader("Cache-Control", "s-max-age=1, stale-while-revalidate");
-
-    res.status(200).json({ conversation: newConversation })
-
+    // return conversation if true
+    // create conversation if it doesnt exist
   } catch (error: any) {
     res.status(401).json({ message: error?.data })
   }
-
-
-
 
 });
 
@@ -138,7 +196,7 @@ const getUserConversation = asyncHandler(async (req: CustomInterface, res: Respo
     }
   })
 
-  if (conversation[0]) {
+  if (conversation[0] !== undefined) {
     res.status(200).json({ conversation: conversation[0] })
 
   } else {
