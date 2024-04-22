@@ -30,15 +30,15 @@ const Feed: React.FC = () => {
     useEffect(() => {
         setMessage([])
         dispatch(clearconversation("any"))
-        // dispatch(Createconversation({conversationData: {userId: id } }))
+        dispatch(Createconversation({conversationData: {userId: id } }))
     }, [])
 
 
     useEffect(() => {
-        dispatch(Createconversation({ conversationData: { userId: id } }))
+        // dispatch(Createconversation({ conversationData: { userId: id } }))
         dispatch(GetSingleUserProfile({ id }))
         dispatch(GetUsersMessageConversation({ receiverId: id }))
-    }, [id])
+    }, [])
 
     const handleSingleMessageDetails = async () => {
         try {

@@ -46,7 +46,7 @@ const createMessage = asyncHandler(async (req: CustomInterface, res: Response) =
     }
   })
   //  update the conversation
-  const newConversation = await prisma.conversations.update({
+  await prisma.conversations.update({
     where: {
       id: conversationId,
     },
