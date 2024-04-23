@@ -57,9 +57,10 @@ const Message: React.FC<MessageProps> = ({ setMessage, arrivalmessage, handleSin
         senderId: userInfo?.id,
         text: body,
       });
+      setBody("");
       // setArrivalMessage(response.data.messages)
 
-      setBody("");
+      
 
     } catch (err: any) {
       console.log(err)
