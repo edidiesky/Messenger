@@ -20,6 +20,7 @@ const Feed: React.FC = () => {
     const { id } = useParams()
     const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
     const [message, setMessage] = React.useState<any>([])
+    const [arrivalmessage, setArrivalMessage] = React.useState<any>({});
     const [sidebar, setSidebar] = React.useState<boolean>(false)
 
     // console.log(id)
@@ -30,7 +31,7 @@ const Feed: React.FC = () => {
     useEffect(() => {
         setMessage([])
         dispatch(clearconversation("any"))
-        dispatch(Createconversation({conversationData: {userId: id } }))
+        dispatch(Createconversation({ conversationData: { userId: id } }))
     }, [])
 
 
@@ -38,7 +39,7 @@ const Feed: React.FC = () => {
         // dispatch(Createconversation({ conversationData: { userId: id } }))
         dispatch(GetSingleUserProfile({ id }))
         dispatch(GetUsersMessageConversation({ receiverId: id }))
-    }, [])
+    }, [id])
 
     const handleSingleMessageDetails = async () => {
         try {
@@ -51,8 +52,8 @@ const Feed: React.FC = () => {
                 `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
                 config
             )
-            // setMessage((prev: any) => [...prev, response.data.messages])
-            setMessage(response.data.messages)
+            setMessage((prev: any) => [...prev, response.data.messages])
+            // setMessage(response.data.messages)
 
         } catch (err: any) {
             console.log(err)
@@ -60,12 +61,8 @@ const Feed: React.FC = () => {
     }
 
     useEffect(() => {
-        if (conversationDetails !== null) {
-            handleSingleMessageDetails()
-        } else {
-            setMessage([])
-        }
-    }, [conversationDetails, setMessage])
+        handleSingleMessageDetails()
+    }, [])
 
     // console.log(message)
 
@@ -80,7 +77,7 @@ const Feed: React.FC = () => {
                     sidebar={sidebar}
                 />
                 <Content setMessage={setMessage} message={message} />
-                <Message setMessage={setMessage} message={message} />
+                <Message setArrivalMessage={setArrivalMessage} arrivalmessage={arrivalmessage} setMessage={setMessage} message={message} />
             </div>
             <MyAnimatePresence>
                 {sidebar && <UserProfileSidebar sidebar={sidebar} />}

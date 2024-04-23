@@ -15,16 +15,18 @@ import {
 import { ReceiveMessage } from "../../../features/message/messageSlice";
 type MessageProps = {
   setMessage: (value: any) => void,
-  message?: any
+  setArrivalMessage: (value: any) => void,
+  message?: any,
+  arrivalmessage?:any,
 }
 
-const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
+const Message: React.FC<MessageProps> = ({ setMessage,arrivalmessage,message, setArrivalMessage }) => {
   socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
   const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
 
   const [body, setBody] = React.useState<string>("");
   const [image, setImage] = React.useState<string>("");
-  const [arrivalmessage, setArrivalMessage] = React.useState<string>("");
+  
   // const dispatch = useAppDispatch()
 
   const dispatch = useAppDispatch();
@@ -36,11 +38,11 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
 
   const handleCreateMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    socketIo?.emit("sendMessage", {
-      receiverId: userDetails?.id,
-      senderId: userInfo?.id,
-      text: body,
-    });
+    // socketIo?.emit("sendMessage", {
+    //   receiverId: userDetails?.id,
+    //   senderId: userInfo?.id,
+    //   text: body,
+    // });
 
     try {
       const config = {
@@ -57,7 +59,7 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
         config
       )
 
-      setMessage((prev?: any) => [...prev, response.data.messages])
+      setArrivalMessage(response.data.messages)
       setBody("");
 
     } catch (err: any) {
@@ -74,21 +76,21 @@ const Message: React.FC<MessageProps> = ({ setMessage, message }) => {
     // }))
 
   };
-  React.useEffect(() => {
-    socketIo?.emit('addUserId', userInfo?.id)
-    socketIo?.on('getAllConnectedUser', (users?: any) => {
-      // console.log(users)
-    })
-    socketIo.on('getMessage', ({ text, senderId }: any) => {
+  // React.useEffect(() => {
+  //   socketIo?.emit('addUserId', userInfo?.id)
+  //   socketIo?.on('getAllConnectedUser', (users?: any) => {
+  //     // console.log(users)
+  //   })
+  //   // socketIo.on('getMessage', ({ text, senderId }: any) => {
      
-      setMessage((prev: any) => [...prev, {
-        body: text,
-        image: image,
-        senderId: senderId
-      }])
-    })
-    //  console.log(arrivalmessage);
-  }, [socketIo]);
+  //   //   setMessage((prev: any) => [...prev, {
+  //   //     body: text,
+  //   //     image: image,
+  //   //     senderId: senderId
+  //   //   }])
+  //   // })
+  //   //  console.log(arrivalmessage);
+  // }, [socketIo]);
   // console.log(message)
   return (
     <MessageStyles className="w-100 flex column gap-2">
