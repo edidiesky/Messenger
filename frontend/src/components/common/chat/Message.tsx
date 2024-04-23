@@ -9,10 +9,6 @@ import ImageIcon from "../../../assets/svg/Image";
 import GifIcon from "../../../assets/svg/gif";
 import StickerIcon from "../../../assets/svg/sticker";
 import { useAppDispatch, useAppSelector } from "../../../hooks/reduxtoolkit";
-import {
-  Createmessage,
-} from "../../../features/message/messageReducer";
-import { ReceiveMessage } from "../../../features/message/messageSlice";
 type MessageProps = {
   setMessage: (value: any) => void,
   setArrivalMessage: (value: any) => void,
