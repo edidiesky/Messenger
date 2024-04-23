@@ -59,19 +59,25 @@ let users = [] as any
 const addUserId = (userId?: any, socketId?: any) => {
   // check if the object: {yserId, socketId} is being found in the usres array
   // if not found add it to the users array
-  !users?.some((user?: any) => user?.userId === userId) && users.push({ userId, socketId })
+  // !users?.some((user?: any) => user?.userId === userId) && users.push({ userId, socketId })
+  const userExits = users.find((user?: any) => user.userId === userId);
+  if (!userExits) {
+    users.push({ userId, socketId });
+  }
 }
 
 const RemoveUser = (socketId?: string) => {
   // check if the object: {yserId, socketId} is being found in the usres array
   // if not found add it to the users array
   users = users?.filter((user?: any) => user?.socketId !== socketId)
+
 }
 
 const getASpecificUser = (userId?: any) => {
-  // console.log(userId)
+  // console.log(users)
 
-  return users?.filter((obj?: any) => obj.userId === userId)
+  // return users?.filter((obj?: any) => obj.userId === userId)
+  return users.find((user: { userId?: string }) => user.userId === userId);
 }
 
 io.on('connection', (socket) => {
@@ -93,10 +99,11 @@ io.on('connection', (socket) => {
     // get the specific usre u intend to send the message to
     const user = getASpecificUser(receiverId)
     // console.log(user, users)
-    // console.log(user[0]?.userId)
-    io.to(user[0]?.socketId).emit('getMessage', {
+    // console.log(user?.socketId)
+    // console.log({ receiverId, senderId, text })
+    io.to(user?.socketId).emit('getMessage', {
+      receiverId: receiverId,
       text: text,
-      senderId: senderId,
     })
 
   })

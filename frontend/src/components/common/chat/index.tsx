@@ -26,19 +26,32 @@ const Feed: React.FC = () => {
     // console.log(id)
     const dispatch = useAppDispatch()
     // 
-    const { conversationDetails } = useAppSelector(store => store.conversation)
+    const { conversationDetails } = useAppSelector((store: { conversation: any; }) => store.conversation)
     const { userInfo, token } = useAppSelector(store => store.auth)
+
     useEffect(() => {
         setMessage([])
         dispatch(clearconversation("any"))
-        dispatch(Createconversation({ conversationData: { userId: id } }))
     }, [])
+
+    useEffect(() => {
+        if (!conversationDetails) {
+            dispatch(Createconversation({ conversationData: { userId: id } }))
+        }
+    }, [conversationDetails])
 
 
     useEffect(() => {
-        // dispatch(Createconversation({ conversationData: { userId: id } }))
+        // if(id) {
+        //     dispatch(Createconversation({ conversationData: { userId: id } }))
+        //     dispatch(GetSingleUserProfile({ id }))
+        //     dispatch(GetUsersMessageConversation({ receiverId: id }))
+        // }
+
         dispatch(GetSingleUserProfile({ id }))
         dispatch(GetUsersMessageConversation({ receiverId: id }))
+        // dispatch(Createconversation({ conversationData: { userId: id } }))
+
     }, [id])
 
     const handleSingleMessageDetails = async () => {
@@ -52,7 +65,7 @@ const Feed: React.FC = () => {
                 `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
                 config
             )
-            setMessage((prev: any) => [...prev, response.data.messages])
+            setMessage(response.data.messages)
             // setMessage(response.data.messages)
 
         } catch (err: any) {
@@ -61,8 +74,13 @@ const Feed: React.FC = () => {
     }
 
     useEffect(() => {
-        handleSingleMessageDetails()
-    }, [])
+        if (conversationDetails) {
+            handleSingleMessageDetails()
+        } else {
+            setMessage([])
+        }
+
+    }, [setMessage, conversationDetails])
 
     // console.log(message)
 
@@ -77,7 +95,7 @@ const Feed: React.FC = () => {
                     sidebar={sidebar}
                 />
                 <Content setMessage={setMessage} message={message} />
-                <Message setArrivalMessage={setArrivalMessage} arrivalmessage={arrivalmessage} setMessage={setMessage} message={message} />
+                <Message handleSingleMessageDetails={handleSingleMessageDetails} setArrivalMessage={setArrivalMessage} arrivalmessage={arrivalmessage} setMessage={setMessage} message={message} />
             </div>
             <MyAnimatePresence>
                 {sidebar && <UserProfileSidebar sidebar={sidebar} />}

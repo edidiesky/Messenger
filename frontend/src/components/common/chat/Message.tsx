@@ -17,19 +17,16 @@ type MessageProps = {
   setMessage: (value: any) => void,
   setArrivalMessage: (value: any) => void,
   message?: any,
-  arrivalmessage?:any,
+  arrivalmessage?: any,
+  handleSingleMessageDetails: (value?: any) => void
 }
 
-const Message: React.FC<MessageProps> = ({ setMessage,arrivalmessage,message, setArrivalMessage }) => {
+const Message: React.FC<MessageProps> = ({ setMessage, arrivalmessage, handleSingleMessageDetails, message, setArrivalMessage }) => {
   socketIo = socketIo.connect(import.meta.env.VITE_API_BASE_URL);
   const messageurl: string = `${import.meta.env.VITE_API_BASE_URLS}/message`;
 
   const [body, setBody] = React.useState<string>("");
   const [image, setImage] = React.useState<string>("");
-  
-  // const dispatch = useAppDispatch()
-
-  const dispatch = useAppDispatch();
 
   const { conversationDetails } = useAppSelector((store) => store.conversation);
   const { userInfo, userDetails, token } = useAppSelector((store) => store.auth);
@@ -38,19 +35,13 @@ const Message: React.FC<MessageProps> = ({ setMessage,arrivalmessage,message, se
 
   const handleCreateMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // socketIo?.emit("sendMessage", {
-    //   receiverId: userDetails?.id,
-    //   senderId: userInfo?.id,
-    //   text: body,
-    // });
-
     try {
       const config = {
         headers: {
           authorization: `Bearer ${token}`,
         },
       };
-      const response = await axios.post(
+      const { data } = await axios.post(
         `${import.meta.env.VITE_API_BASE_URLS}/message/${conversationDetails?.id}`,
         {
           body,
@@ -59,7 +50,15 @@ const Message: React.FC<MessageProps> = ({ setMessage,arrivalmessage,message, se
         config
       )
 
-      setArrivalMessage(response.data.messages)
+      handleSingleMessageDetails()
+      setMessage((prev?: any) => [...prev, { body: data.body, userId: userInfo?._id, }])
+      socketIo?.emit("sendMessage", {
+        receiverId: userDetails?.id,
+        senderId: userInfo?.id,
+        text: body,
+      });
+      // setArrivalMessage(response.data.messages)
+
       setBody("");
 
     } catch (err: any) {
@@ -68,30 +67,20 @@ const Message: React.FC<MessageProps> = ({ setMessage,arrivalmessage,message, se
 
     setBody("");
 
-
-    // dispatch(Createmessage({
-    //     body: body,
-    //     userId: userInfo?._id,
-    //     conversationId: conversationDetails?.id
-    // }))
-
   };
-  // React.useEffect(() => {
-  //   socketIo?.emit('addUserId', userInfo?.id)
-  //   socketIo?.on('getAllConnectedUser', (users?: any) => {
-  //     // console.log(users)
-  //   })
-  //   // socketIo.on('getMessage', ({ text, senderId }: any) => {
-     
-  //   //   setMessage((prev: any) => [...prev, {
-  //   //     body: text,
-  //   //     image: image,
-  //   //     senderId: senderId
-  //   //   }])
-  //   // })
-  //   //  console.log(arrivalmessage);
-  // }, [socketIo]);
+  React.useEffect(() => {
+    socketIo?.emit('addUserId', userInfo?.id)
+    socketIo?.on('getAllConnectedUser', (users?: any) => {
+      // console.log(users)
+    })
+    socketIo?.on('getMessage', (message?: any) => {
+      setMessage((prev?: any) => [...prev, { body: message.text, userId: userInfo?._id, }])
+      // console.log(message)
+    })
+
+  }, [socketIo, setMessage]);
   // console.log(message)
+  //  console.log(arrivalmessage);
   return (
     <MessageStyles className="w-100 flex column gap-2">
       <form

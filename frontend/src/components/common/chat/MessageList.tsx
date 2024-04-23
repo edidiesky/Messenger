@@ -19,13 +19,13 @@ const MessageList: React.FC<MessageListProps> = ({ setMessage, message, setArriv
             senderId: any;
             createdAt: moment.MomentInput;
             body: any;
-          }) => {
+          }, index?:any) => {
             const usermessage = messages?.senderId === userInfo?.id;
             const createdAt = moment(messages?.createdAt).format(
               "MMMM Do YYYY, h:mm a"
             );
             return (
-              <div className="">
+              <div key={index} className="">
                 <div className="chatCard flex w-100 column">
                   {usermessage ? (
                     <div className="flex w-100 column gap-1">
