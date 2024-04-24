@@ -110,6 +110,7 @@ const createConversation = asyncHandler(async (req: CustomInterface, res: Respon
   const { members, isGroup, lastMessage, userId } = req.body
   const senderuserId = req.user?.userId
   // console.log(req.body, senderuserId)
+ 
   try {
     // find conversation
     const existingConversations = await prisma.conversations.findMany({

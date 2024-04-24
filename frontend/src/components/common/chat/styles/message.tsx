@@ -8,7 +8,7 @@ export const MessageStyles = styled.div`
     background: rgba(255, 255, 255, 0.65);
      backdrop-filter: blur(12px);
      padding: 0 1rem;
-
+     min-height: 55px;
     .icon:hover {
     background-color: var(--grey-2);
     

@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
 export const ContentStyles = styled.div`
-  height: 100%;
+  /* height:; */
+  /* max-height:100%; */
+  /* min-height:100vh; */
+  height:90%;
   padding: 4rem 0;
-  overflow: auto;
+  overflow-y: auto;
+
   .content_top {
      img {
        width: 6rem;

@@ -88,8 +88,8 @@ const Feed: React.FC = () => {
 
 
     return (
-        <ChatSectionStyles className="w-100 h-100 flex">
-            <div className="main_chat w-100 h-100">
+        <ChatSectionStyles style={{ height: "100vh" }} className="w-100 h-100 relative flex">
+            <div className="main_chat relative w-100 h-100">
                 <Topbar
                     setSidebar={setSidebar}
                     sidebar={sidebar}
