@@ -59,8 +59,7 @@ let users = [] as any
 const addUserId = (userId?: any, socketId?: any) => {
   // check if the object: {yserId, socketId} is being found in the usres array
   // if not found add it to the users array
-  // !users?.some((user?: any) => user?.userId === userId) && users.push({ userId, socketId })
-  const userExits = users.find((user?: any) => user.userId === userId);
+ const userExits = users.find((user?: any) => user.userId === userId);
   if (!userExits) {
     users.push({ userId, socketId });
   }

@@ -29,7 +29,7 @@ export default function App() {
   React.useEffect(() => {
     socketIo?.emit('addUserId', userInfo?.id)
     socketIo?.on('getAllConnectedUser', (users?: any) => {
-      // console.log(users)
+      console.log(users)
     })
   }, [])
 
