@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const MessageListStyles = styled.div`
   height: 100%;
+    z-index: 4000;
   .chatList {
     padding-top: 4rem;
     padding-right: 2rem;

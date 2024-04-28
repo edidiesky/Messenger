@@ -75,11 +75,16 @@ export const FeedbarStyles = styled.div`
 
 
 export const SmallSidebarStyles = styled.div`
+  z-index: 400000;
+  overflow: hidden;
   .sidebar_icons{
-    min-height: 45px;
+      z-index: 400000;
+    position: relative;
+    min-height: 40px;
     width: 70%;
     border-radius: 8px;
     transition: all .4s;
+   
    &:hover {
      background-color: var(--light-grey);
    }

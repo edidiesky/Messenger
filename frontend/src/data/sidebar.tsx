@@ -21,16 +21,6 @@ export const sidebatlist = [
         path:"/active"
     },
     {
-        text: "Marketplace",
-        icons: <PeopleIcon />,
-        path:"/marketplace"
-    },
-    {
-        text: "Request",
-        icons: < RequestIcon />,
-        path:"/requests"
-    },
-    {
         text: "Archive",
         icons: <ArchiveIcon />,
         path:"/archive"

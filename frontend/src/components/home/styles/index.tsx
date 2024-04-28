@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const HomeStyles = styled.div`
   width: 100%;
+  z-index: 30;
 `
 
 // top
@@ -114,6 +115,7 @@ export const FriendListStyles = styled(motion.div)`
   /* height: 100vh; */
   position: sticky;
   top: 0;
+  z-index: 30;
   background-color: #fff;
   color: var(--dark-1);
   height: 80%;
